@@ -9,8 +9,8 @@ class Cart
   end
 
   def items
-    # Cartにとってのitemsは自身の@itemsとしたいため、ItemManagerのitemsメソッドをオーバーライドします。
-    # CartインスタンスがItemインスタンスを持つときは、オーナー権限の移譲をさせることなく、自身の@itemsに格納(Cart#add)するだけだからです。
+    # Override the items method of ItemManager so that the Cart's items become its own @items.
+    # When a Cart instance has an Item instance, it just stores it in its own @items (Cart#add) without letting the owner authority transfer.
     @items
   end
 
@@ -24,16 +24,16 @@ class Cart
 
   def check_out
     return if owner.wallet.balance < total_amount
-  # ## 要件
-  #   - カートの中身（Cart#items）のすべてのアイテムの購入金額が、カートのオーナーのウォレットからアイテムのオーナーのウォレットに移されること。
-  #   - カートの中身（Cart#items）のすべてのアイテムのオーナー権限が、カートのオーナーに移されること。
-  #   - カートの中身（Cart#items）が空になること。
+  # Requirements
+  # - The purchase amount of all items in the cart（Cart#items）is transferred from the cart owner's wallet to the item owner's wallet.
+  # - The owner rights of all items in the cart（Cart#items）are transferred to the cart owner.
+  # - The contents of the cart（Cart#items）are emptied.
 
-  # ## ヒント
-  #   - カートのオーナーのウォレット ==> self.owner.wallet
-  #   - アイテムのオーナーのウォレット ==> item.owner.wallet
-  #   - お金が移されるということ ==> (？)のウォレットからその分を引き出して、(？)のウォレットにその分を入金するということ
-  #   - アイテムのオーナー権限がカートのオーナーに移されること ==> オーナーの書き換え(item.owner = ?)
+  # Hints
+  # - Wallet of the owner of the cart ==> self.owner.wallet
+  # - Item owner's wallet ==> item.owner.wallet
+  # - Money being transferred ==> withdrawing the amount from someone's wallet and depositing the amount into someone else's wallet
+  # - The owner of the item is transferred to the owner of the cart ==> The owner is rewritten (item.owner = ?)
   end
 
 end
